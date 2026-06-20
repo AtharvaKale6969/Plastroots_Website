@@ -1,4 +1,4 @@
-:root {
+﻿:root {
     --primary-green: #3C6E47;
     --dark-green: #1B2E1F;
     --olive-green: #7A8B5C;
@@ -729,17 +729,6 @@ body {
     .about-grid {
         grid-template-columns: 1fr;
     }
-    
-    
-/* Add Orbit Animations */
-@keyframes orbit {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-
-@keyframes counter-orbit {
-    0% { transform: translate(-50%, -50%) rotate(0deg); }
-    100% { transform: translate(-50%, -50%) rotate(-360deg); }
 }
 
 .orbit-ring {
@@ -747,22 +736,14 @@ body {
     inset: 0;
     width: 100%;
     height: 100%;
-    animation: orbit 40s linear infinite;
-    z-index: 5;
-}
 
-.circle-infographic:hover .orbit-ring,
-.circle-infographic:hover .step-item {
-    animation-play-state: paused;
-}
-
-.circle-infographic {
+    .circle-infographic {
         margin: 40px auto;
-        transform: scale(0.85); /* Scale down slightly for tablet */
+        transform: scale(0.85);
     }
     
     .main-logo {
-        margin-left: -20px; /* Reduce massive shift on medium screens */
+        margin-left: -20px;
     }
 }
 
@@ -801,16 +782,6 @@ body {
     }
     
     /* Shrink the large circular infographic to fit mobile viewport */
-    
-/* Add Orbit Animations */
-@keyframes orbit {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-
-@keyframes counter-orbit {
-    0% { transform: translate(-50%, -50%) rotate(0deg); }
-    100% { transform: translate(-50%, -50%) rotate(-360deg); }
 }
 
 .orbit-ring {
@@ -827,6 +798,7 @@ body {
     animation-play-state: paused;
 }
 
+@media (max-width: 768px) {
 .circle-infographic {
         width: 320px;
         height: 320px;
@@ -986,7 +958,9 @@ body {
     color: var(--dark-green);
     margin-bottom: 15px;
     font-weight: 700;
-    
+}
+
+@media (max-width: 768px) {
     .mobile-menu-btn {
         display: block;
     }
@@ -996,16 +970,6 @@ body {
     }
     
     /* Shrink the large circular infographic to fit mobile viewport */
-    
-/* Add Orbit Animations */
-@keyframes orbit {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-
-@keyframes counter-orbit {
-    0% { transform: translate(-50%, -50%) rotate(0deg); }
-    100% { transform: translate(-50%, -50%) rotate(-360deg); }
 }
 
 .orbit-ring {
@@ -1022,6 +986,7 @@ body {
     animation-play-state: paused;
 }
 
+@media (max-width: 768px) {
 .circle-infographic {
         width: 320px;
         height: 320px;
