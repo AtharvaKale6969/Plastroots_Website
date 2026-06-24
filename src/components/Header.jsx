@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 
 const Header = () => {
     const [isSticky, setIsSticky] = useState(false);
@@ -36,16 +36,21 @@ const Header = () => {
             <header className={`navbar ${isSticky ? 'sticky' : ''}`} id="navbar">
                 <div className="container nav-container">
                     <nav className="nav-links">
-                        <Link to="/" className="nav-link active">Home</Link>
-                        <Link to="/about" className="nav-link">About Us</Link>
+                        <NavLink to="/" end className="nav-link">Home</NavLink>
+                        <NavLink to="/about" className="nav-link">About Us</NavLink>
                         <div className="dropdown">
-                            <Link to="/products-services" className="nav-link">Products & Services <i className="fas fa-chevron-down text-xs"></i></Link>
+                            <NavLink to="/products-services" className="nav-link">Products & Services <i className="fas fa-chevron-down text-xs"></i></NavLink>
+                            <div className="dropdown-menu">
+                                <Link to="/products-services?category=corporate-compliance" className="dropdown-item">Corporate Compliance</Link>
+                                <Link to="/products-services?category=government-services" className="dropdown-item">Government Services</Link>
+                                <Link to="/products-services?category=products" className="dropdown-item">Products</Link>
+                            </div>
                         </div>
-                        <Link to="/careers" className="nav-link">Career</Link>
+                        <NavLink to="/careers" className="nav-link">Career</NavLink>
                         <div className="dropdown">
-                            <Link to="/blog" className="nav-link">Blog <i className="fas fa-chevron-down text-xs"></i></Link>
+                            <NavLink to="/blog" className="nav-link">Blog <i className="fas fa-chevron-down text-xs"></i></NavLink>
                         </div>
-                        <Link to="/contact" className="nav-link">Contact</Link>
+                        <NavLink to="/contact" className="nav-link">Contact</NavLink>
                     </nav>
                     <div className="nav-cta">
                         <a href="#contact" className="btn btn-dark">GET IN TOUCH</a>

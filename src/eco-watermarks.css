@@ -1,0 +1,244 @@
+/* ==========================================================
+   ECO WATERMARK DECORATIONS — Plastroots Home Page
+   SVG backgrounds via CSS pseudo-elements. No external images.
+   Color logic: dark bg sections → light/bright strokes
+                light bg sections → dark/deep strokes
+   ========================================================== */
+
+
+/* ╔══════════════════════════════════════════════════════════╗
+   ║  1. OUR OPERATIONAL FOOTPRINT (SustainabilityImpact)    ║
+   ║     Background: dark forest green #16261d               ║
+   ║     leaf_watermark.png — botanical corner cluster       ║
+   ║                                                         ║
+   ║  ::before → bottom-left (primary, large)               ║
+   ║  ::before → bottom-left (primary, large)               ║
+   ║  ::after  → top-right  (mirrored, smaller accent)      ║
+   ╚══════════════════════════════════════════════════════════╝ */
+
+.sustainability-impact-section {
+    position: relative;
+    overflow: hidden; /* Contains the watermarks to this section */
+}
+
+.sustainability-impact-section::before {
+    content: '';
+    position: absolute;
+    bottom: -40px;
+    left: -40px;
+    width: 540px;
+    height: 540px;
+    background-image: url('/Images/leaf_watermark.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: bottom left;
+    /* Multiply keeps the black leaves and drops the white background */
+    mix-blend-mode: multiply;
+    opacity: 0.4;
+    z-index: 0;
+    pointer-events: none;
+}
+
+.sustainability-impact-section::after {
+    content: '';
+    position: absolute;
+    top: -40px;
+    right: -40px;
+    width: 380px;
+    height: 380px;
+    background-image: url('/Images/leaf_watermark.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: top right;
+    /* Multiply keeps the black leaves and drops the white background */
+    mix-blend-mode: multiply;
+    opacity: 0.25;
+    z-index: 0;
+    pointer-events: none;
+    transform: rotate(180deg);
+}
+
+
+/* ╔══════════════════════════════════════════════════════════╗
+   ║  2. OUR APPROACH (Process Section)                      ║
+   ║     Design_1.png bleeds into Stats (above) and          ║
+   ║     Testimonials (below) for a continuous illustration  ║
+   ║                                                         ║
+   ║  How it works:                                          ║
+   ║  • stats-section bg → transparent (body cream same hue) ║
+   ║  • process-section bg → transparent, overflow: visible  ║
+   ║  • ::before extends 380px above + 200px below           ║
+   ║  • Gradient mask fades edges for a natural flow         ║
+   ╚══════════════════════════════════════════════════════════╝ */
+
+/* Make stats-section transparent — its background is the same
+   cream as body (#F4F1EC) so it's visually identical but now
+   the image from process can be seen through it. */
+.stats-section {
+    background-color: transparent !important;
+}
+
+/* Make process-section transparent and let it overflow freely. */
+.process-section {
+    position: relative;
+    overflow: visible; /* Allow image to bleed beyond section bounds */
+    background-color: transparent !important;
+}
+
+.process-section::before {
+    content: '';
+    position: absolute;
+    top: -420px;                       /* Bleed up into Stats section */
+    left: 0;
+    right: 0;
+    height: calc(100% + 620px);        /* +420px above +200px below */
+    background-image: url('/Images/Design_1.png');
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    opacity: 0.58;
+    z-index: 0;
+    pointer-events: none;
+    /* Gradient mask: transparent edges → fully visible in the middle.
+       Creates a natural 'flow' so the image never hard-cuts at a boundary. */
+    -webkit-mask-image: linear-gradient(
+        to bottom,
+        transparent   0%,
+        rgba(0,0,0,0.4) 10%,
+        black         22%,
+        black         80%,
+        rgba(0,0,0,0.4) 90%,
+        transparent   100%
+    );
+    mask-image: linear-gradient(
+        to bottom,
+        transparent   0%,
+        rgba(0,0,0,0.4) 10%,
+        black         22%,
+        black         80%,
+        rgba(0,0,0,0.4) 90%,
+        transparent   100%
+    );
+}
+
+/* ::after not needed — Design_1 covers the full canvas */
+.process-section::after {
+    display: none;
+}
+
+
+/* ╔══════════════════════════════════════════════════════════╗
+   ║  3. CIRCULAR TRUST NETWORK (Testimonials)               ║
+   ║     Top area bg: dark #4a6051 → bright lime decorations ║
+   ║     Bottom area bg: light cream → dark olive decors     ║
+   ║                                                         ║
+   ║  ::before → Leaf wreath ring, top-right (dark zone)     ║
+   ║  ::after  → Fern frond + roots, bottom-left (light zone)║
+   ╚══════════════════════════════════════════════════════════╝ */
+
+.testimonials-section {
+    position: relative;
+}
+
+.testimonials-section::before {
+    content: '';
+    position: absolute;
+    top: -30px;
+    right: -50px;
+    width: 480px;
+    height: 480px;
+    /* Leaf wreath — 14 petals + inner rings, bright lime on dark green */
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 300'%3E%3Cg fill='%23a4d65e'%3E%3C!-- 14 elliptical leaves in wreath --%3E%3Cellipse cx='150' cy='42' rx='13' ry='30' transform='rotate(0 150 150)'/%3E%3Cellipse cx='150' cy='42' rx='13' ry='30' transform='rotate(25.7 150 150)'/%3E%3Cellipse cx='150' cy='42' rx='13' ry='30' transform='rotate(51.4 150 150)'/%3E%3Cellipse cx='150' cy='42' rx='13' ry='30' transform='rotate(77.1 150 150)'/%3E%3Cellipse cx='150' cy='42' rx='13' ry='30' transform='rotate(102.8 150 150)'/%3E%3Cellipse cx='150' cy='42' rx='13' ry='30' transform='rotate(128.5 150 150)'/%3E%3Cellipse cx='150' cy='42' rx='13' ry='30' transform='rotate(154.2 150 150)'/%3E%3Cellipse cx='150' cy='42' rx='13' ry='30' transform='rotate(180 150 150)'/%3E%3Cellipse cx='150' cy='42' rx='13' ry='30' transform='rotate(205.7 150 150)'/%3E%3Cellipse cx='150' cy='42' rx='13' ry='30' transform='rotate(231.4 150 150)'/%3E%3Cellipse cx='150' cy='42' rx='13' ry='30' transform='rotate(257.1 150 150)'/%3E%3Cellipse cx='150' cy='42' rx='13' ry='30' transform='rotate(282.8 150 150)'/%3E%3Cellipse cx='150' cy='42' rx='13' ry='30' transform='rotate(308.5 150 150)'/%3E%3Cellipse cx='150' cy='42' rx='13' ry='30' transform='rotate(334.2 150 150)'/%3E%3C/g%3E%3Cg fill='none' stroke='%23c8e890' stroke-width='2'%3E%3C!-- Inner rings --%3E%3Ccircle cx='150' cy='150' r='62' stroke-dasharray='6 5'/%3E%3Ccircle cx='150' cy='150' r='40' stroke-dasharray='3 4' opacity='0.6'/%3E%3C/g%3E%3C/svg%3E");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: top right;
+    opacity: 0.11;
+    z-index: 0;
+    pointer-events: none;
+}
+
+.testimonials-section::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: -40px;
+    width: 460px;
+    height: 380px;
+    /* Botanical fern frond — dark olive on light cream bottom area */
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 240'%3E%3Cg fill='none' stroke='%232D4A30' stroke-width='2.5' stroke-linecap='round'%3E%3C!-- Main stem --%3E%3Cpath d='M150 235 Q146 185 148 140 Q150 95 146 50 Q148 25 150 10'/%3E%3C!-- Left fronds — progressively shorter toward tip --%3E%3Cpath d='M149 200 Q112 182 82 165'/%3E%3Cpath d='M149 172 Q116 152 90 132'/%3E%3Cpath d='M149 145 Q120 125 98 106'/%3E%3Cpath d='M149 120 Q125 102 108 84'/%3E%3Cpath d='M149 96 Q130 80 118 62'/%3E%3Cpath d='M149 74 Q135 60 128 44'/%3E%3C!-- Right fronds --%3E%3Cpath d='M150 200 Q187 182 216 165'/%3E%3Cpath d='M150 172 Q183 152 208 132'/%3E%3Cpath d='M150 145 Q179 125 200 106'/%3E%3Cpath d='M150 120 Q174 102 190 84'/%3E%3Cpath d='M150 96 Q168 80 180 62'/%3E%3Cpath d='M150 74 Q164 60 170 44'/%3E%3C!-- Sub-leaflets on left fronds --%3E%3Cpath d='M82 165 Q68 157 58 148' stroke-width='1.8'/%3E%3Cpath d='M90 132 Q76 123 67 113' stroke-width='1.8'/%3E%3Cpath d='M98 106 Q86 96 78 84' stroke-width='1.5' opacity='0.7'/%3E%3C!-- Sub-leaflets on right fronds --%3E%3Cpath d='M216 165 Q230 157 240 148' stroke-width='1.8'/%3E%3Cpath d='M208 132 Q222 123 231 113' stroke-width='1.8'/%3E%3Cpath d='M200 106 Q212 96 220 84' stroke-width='1.5' opacity='0.7'/%3E%3C/g%3E%3C/svg%3E");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: bottom left;
+    opacity: 0.10;
+    z-index: 0;
+    pointer-events: none;
+}
+
+
+/* ╔══════════════════════════════════════════════════════════╗
+   ║  Z-INDEX SAFETY — content always above decorations       ║
+   ╚══════════════════════════════════════════════════════════╝ */
+
+.si-wide-container,
+.process-wrapper,
+.testimonials-split-wrapper,
+.testimonials-grid,
+.container {
+    position: relative;
+    z-index: 5;
+}
+
+/* Ensure stats cards are fully opaque and strictly on top */
+.si-stats-panel,
+.si-stat-card-premium {
+    position: relative;
+}
+
+/* ╔══════════════════════════════════════════════════════════╗
+   ║  4. FOOTER                                              ║
+   ║     Design_2.png — renewable energy / eco landscape     ║
+   ║     Bottom-anchored watermark spreading across width    ║
+   ╚══════════════════════════════════════════════════════════╝ */
+
+.footer {
+    position: relative;
+    overflow: hidden;
+}
+
+.footer::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('/Images/Design_2.png');
+    background-size: cover;
+    background-position: bottom center;
+    background-repeat: no-repeat;
+    opacity: 0.15;
+    z-index: 0;
+    pointer-events: none;
+}
+
+/* Ensure footer content is above the watermark */
+.footer .footer-grid,
+.footer .footer-bottom {
+    position: relative;
+    z-index: 2;
+}
+
+
+/* ╔══════════════════════════════════════════════════════════╗
+   ║  MOBILE — suppress decorations to avoid overflow         ║
+   ╚══════════════════════════════════════════════════════════╝ */
+
+@media (max-width: 768px) {
+    .sustainability-impact-section::before,
+    .sustainability-impact-section::after,
+    .process-section::before,
+    .testimonials-section::before,
+    .testimonials-section::after {
+        display: none;
+    }
+}

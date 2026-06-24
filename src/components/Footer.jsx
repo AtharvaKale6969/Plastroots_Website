@@ -3,9 +3,6 @@ import React from 'react';
 const Footer = () => {
     return (
         <footer className="footer">
-            <img src="/Images/leaf_watermark.png" alt="" className="watermark-leaf-footer-left" />
-            <img src="/Images/leaf_watermark.png" alt="" className="watermark-leaf-footer-right" />
-            <div className="footer-bg-tree"><i className="fas fa-leaf"></i></div>
             
             <div className="container footer-grid">
                 <div className="footer-col">

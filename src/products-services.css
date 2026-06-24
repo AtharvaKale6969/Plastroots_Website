@@ -1,0 +1,721 @@
+/* ==========================================================
+   PRODUCTS & SERVICES STYLES
+   ========================================================== */
+
+.ps-page-container {
+    padding: 60px 0 100px;
+    background-color: #fcf9f2; /* Warm off-white */
+    min-height: 80vh;
+    overflow-x: hidden;
+}
+
+/* ----------------------------------------------------------
+   Transitions
+   ---------------------------------------------------------- */
+.ps-view-container {
+    animation: fadeSlideUp 0.4s ease-out forwards;
+    position: relative;
+    z-index: 1; /* Creates stacking context for child background doodles */
+}
+
+@keyframes fadeSlideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ----------------------------------------------------------
+   Doodle Background Overlays
+   ---------------------------------------------------------- */
+.ps-fixed-doodles {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 0;
+    pointer-events: none;
+    mix-blend-mode: multiply;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center; 
+}
+
+.bg-corporate-compliance {
+    background-image: url('/Images/Corporate_Compliance_Design.png');
+}
+
+.bg-government-services {
+    background-image: url('/Images/Government_Services_Design.png');
+    background-position: center 75%;
+}
+
+.bg-products {
+    background-image: url('/Images/Products_Design.png');
+}
+
+/* ----------------------------------------------------------
+   Breadcrumb
+   ---------------------------------------------------------- */
+.ps-breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 40px;
+    font-size: 0.9rem;
+    color: #666;
+    flex-wrap: wrap;
+}
+
+.ps-breadcrumb span {
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.ps-breadcrumb span:hover {
+    color: var(--accent-green, #a4d65e);
+}
+
+.ps-breadcrumb .ps-bc-separator {
+    color: #ccc;
+    font-size: 0.8rem;
+    pointer-events: none;
+}
+
+.ps-breadcrumb .ps-bc-active {
+    color: var(--dark-green, #16261d);
+    font-weight: 600;
+    pointer-events: none;
+}
+
+/* ----------------------------------------------------------
+   Typography & Headers (Hero Sections)
+   ---------------------------------------------------------- */
+.ps-hero-section {
+    position: relative;
+    border-radius: 20px;
+    overflow: hidden;
+    margin-bottom: 50px;
+    background-size: cover;
+    background-position: center;
+    min-height: 300px;
+    display: flex;
+    align-items: center;
+    padding: 40px 60px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+.ps-hub-hero {
+    justify-content: center;
+    text-align: center;
+    min-height: 350px;
+}
+
+.ps-hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to right, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.4) 100%);
+    z-index: 1;
+}
+
+.ps-hub-hero .ps-hero-overlay {
+    background: rgba(0,0,0,0.55);
+}
+
+.ps-hero-content {
+    position: relative;
+    z-index: 2;
+    color: #ffffff;
+    max-width: 800px;
+}
+
+.ps-hero-content h1 {
+    font-size: 3.5rem;
+    color: #ffffff;
+    margin-bottom: 20px;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+}
+
+.ps-hero-content p {
+    font-size: 1.3rem;
+    color: rgba(255,255,255,0.95);
+    line-height: 1.6;
+    text-shadow: 0 1px 5px rgba(0,0,0,0.3);
+}
+
+@media (max-width: 768px) {
+    .ps-hero-section {
+        padding: 40px 30px;
+        min-height: 250px;
+    }
+    .ps-hero-content h1 {
+        font-size: 2.2rem;
+    }
+    .ps-hero-content p {
+        font-size: 1.1rem;
+    }
+}
+
+/* Back Button */
+.ps-back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: none;
+    border: none;
+    color: #666;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    margin-bottom: 20px;
+    padding: 0;
+    transition: color 0.3s, transform 0.3s;
+}
+
+.ps-back-btn:hover {
+    color: var(--dark-green, #16261d);
+    transform: translateX(-4px);
+}
+
+/* ----------------------------------------------------------
+   Grid Layouts
+   ---------------------------------------------------------- */
+.ps-grid-3 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+}
+
+.ps-grid-2 {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
+}
+
+@media (max-width: 991px) {
+    .ps-grid-3 {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .ps-grid-3, .ps-grid-2 {
+        grid-template-columns: 1fr;
+    }
+    .ps-header h1 {
+        font-size: 2.2rem;
+    }
+}
+
+/* ----------------------------------------------------------
+   Tabs (Government Services)
+   ---------------------------------------------------------- */
+.ps-tabs {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 30px;
+    border-bottom: 2px solid rgba(0,0,0,0.05);
+    padding-bottom: 10px;
+}
+
+.ps-tab {
+    background: none;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #666;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.ps-tab:hover {
+    background: rgba(0,0,0,0.03);
+    color: var(--dark-green, #16261d);
+}
+
+.ps-tab.active {
+    background: #ffffff;
+    color: var(--dark-green, #16261d);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
+.ps-tab-indicator {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+}
+
+.ps-tab-indicator.green {
+    background-color: #2E7D32;
+}
+
+.ps-tab-indicator.amber {
+    background-color: #E65100;
+}
+
+.ps-section-content.fade-in {
+    animation: fadeSlideUp 0.3s ease-out forwards;
+}
+
+/* ----------------------------------------------------------
+   Cards
+   ---------------------------------------------------------- */
+.ps-card {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 30px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(0, 0, 0, 0.03);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+}
+
+.ps-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
+}
+
+.ps-card-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 12px;
+    background-color: rgba(164, 214, 94, 0.15); /* light green bg */
+    color: var(--dark-green, #16261d);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.ps-card h3 {
+    font-size: 1.5rem;
+    color: var(--dark-green, #16261d);
+    margin-bottom: 15px;
+}
+
+.ps-card p {
+    color: #666;
+    line-height: 1.6;
+    margin-bottom: 25px;
+    flex-grow: 1;
+}
+
+.ps-card-tagline {
+    font-weight: 600;
+    color: var(--dark-green, #16261d);
+    margin-bottom: 10px;
+    display: block;
+}
+
+/* ----------------------------------------------------------
+   Badges / Chips
+   ---------------------------------------------------------- */
+.ps-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: auto;
+    margin-bottom: 20px;
+}
+
+.ps-badge {
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+.ps-badge.neutral {
+    background: #f4f0e6;
+    color: #666;
+}
+
+.ps-badge.green {
+    background: rgba(46, 125, 50, 0.1);
+    color: #2E7D32;
+    border: 1px solid rgba(46, 125, 50, 0.2);
+}
+
+.ps-badge.teal {
+    background: rgba(0, 121, 107, 0.1);
+    color: #00796B;
+    border: 1px solid rgba(0, 121, 107, 0.2);
+}
+
+.ps-badge.amber {
+    background: rgba(230, 81, 0, 0.1);
+    color: #E65100;
+    border: 1px solid rgba(230, 81, 0, 0.2);
+}
+
+/* ----------------------------------------------------------
+   Buttons
+   ---------------------------------------------------------- */
+.ps-btn-explore {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--dark-green, #16261d);
+    font-weight: 600;
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    transition: color 0.3s;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+}
+
+.ps-btn-explore:hover {
+    color: var(--accent-green, #a4d65e);
+}
+
+.ps-btn-explore svg {
+    transition: transform 0.3s;
+}
+
+.ps-btn-explore:hover svg {
+    transform: translateX(4px);
+}
+
+.ps-btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background-color: var(--dark-green, #16261d);
+    color: #fff;
+    padding: 15px 30px;
+    border-radius: 30px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.ps-btn-primary:hover {
+    background-color: var(--accent-green, #a4d65e);
+    color: var(--dark-green, #16261d);
+    transform: translateY(-2px);
+}
+
+/* ----------------------------------------------------------
+   Level 4 Detail Page
+   ---------------------------------------------------------- */
+.ps-detail-header {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 40px;
+    margin-bottom: 40px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+.ps-detail-header h1 {
+    font-size: 2.5rem;
+    color: var(--dark-green, #16261d);
+    margin-bottom: 15px;
+    margin-top: 20px;
+}
+
+.ps-detail-header h2 {
+    font-size: 1.4rem;
+    color: #555;
+    font-weight: 400;
+    line-height: 1.5;
+}
+
+.ps-detail-content {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 40px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    margin-bottom: 40px;
+}
+
+.ps-detail-content h3 {
+    font-size: 1.8rem;
+    color: var(--dark-green, #16261d);
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.ps-detail-content p {
+    font-size: 1.1rem;
+    line-height: 1.7;
+    color: #555;
+    margin-bottom: 20px;
+}
+
+.ps-detail-list {
+    list-style: none;
+    padding: 0;
+    margin: 30px 0;
+}
+
+.ps-detail-list li {
+    position: relative;
+    padding-left: 30px;
+    margin-bottom: 20px;
+    line-height: 1.6;
+}
+
+.ps-detail-list li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 8px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: var(--accent-green, #a4d65e);
+}
+
+.ps-detail-list strong {
+    color: var(--dark-green, #16261d);
+    font-size: 1.1rem;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.ps-execution-note {
+    background: #fcf9f2;
+    padding: 20px;
+    border-radius: 8px;
+    margin: 30px 0;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.ps-execution-note.green {
+    border-left: 4px solid #2E7D32;
+    color: #2E7D32;
+}
+
+.ps-execution-note.amber {
+    border-left: 4px solid #E65100;
+    color: #E65100;
+}
+
+.ps-closing-text {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--dark-green, #16261d);
+    text-align: center;
+    margin: 40px 0 30px;
+}
+
+/* ----------------------------------------------------------
+   Government Services Split Sections
+   ---------------------------------------------------------- */
+.ps-section-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin: 50px 0 30px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #ddd;
+}
+
+.ps-section-header h2 {
+    font-size: 2rem;
+    color: var(--dark-green, #16261d);
+    margin: 0;
+}
+
+.ps-section-desc {
+    color: #666;
+    margin-bottom: 30px;
+    font-size: 1.1rem;
+}
+
+/* ----------------------------------------------------------
+   Global Footer CTA
+   ---------------------------------------------------------- */
+.ps-global-cta {
+    text-align: center;
+    margin-top: 80px;
+    padding-top: 60px;
+    border-top: 1px solid #ddd;
+}
+
+.ps-global-cta p {
+    font-size: 1.4rem;
+    color: var(--dark-green, #16261d);
+    max-width: 800px;
+    margin: 0 auto 30px;
+    line-height: 1.5;
+}
+
+/* ----------------------------------------------------------
+   Dynamic Themed Sections (Government Services)
+   ---------------------------------------------------------- */
+.ps-section-content {
+    transition: background-color 0.5s ease, border-color 0.5s ease;
+    border-radius: 20px;
+    padding: 30px;
+    margin: 0 -30px; /* Offset to allow background to overflow nicely */
+    border: 1px solid transparent;
+}
+
+@media (max-width: 768px) {
+    .ps-section-content {
+        padding: 20px 15px;
+        margin: 0 -15px;
+    }
+}
+
+.theme-green {
+    background-color: rgba(46, 125, 50, 0.02);
+    border-color: rgba(46, 125, 50, 0.08);
+}
+
+.theme-amber {
+    background-color: rgba(230, 81, 0, 0.03);
+    border-color: rgba(230, 81, 0, 0.1);
+}
+
+/* Theme Amber Overrides for Cards */
+.theme-amber .ps-card {
+    border: 1px solid rgba(230, 81, 0, 0.1);
+}
+
+.theme-amber .ps-card:hover {
+    box-shadow: 0 12px 30px rgba(230, 81, 0, 0.08);
+}
+
+.theme-amber .ps-card-icon {
+    background-color: rgba(230, 81, 0, 0.1);
+    color: #E65100;
+}
+
+.theme-amber .ps-btn-explore:hover {
+    color: #E65100;
+}
+
+/* Staggered card animations on tab switch */
+.ps-themed-card {
+    animation: fadeSlideUp 0.4s ease-out forwards;
+    animation-fill-mode: both;
+}
+
+.ps-themed-card:nth-child(1) { animation-delay: 0.05s; }
+.ps-themed-card:nth-child(2) { animation-delay: 0.1s; }
+.ps-themed-card:nth-child(3) { animation-delay: 0.15s; }
+.ps-themed-card:nth-child(4) { animation-delay: 0.2s; }
+.ps-themed-card:nth-child(5) { animation-delay: 0.25s; }
+.ps-themed-card:nth-child(6) { animation-delay: 0.3s; }
+
+/* ----------------------------------------------------------
+   Level 1 Hub Card Themes & Images
+   ---------------------------------------------------------- */
+.ps-card-image {
+    width: calc(100% + 60px);
+    height: 180px;
+    margin: -30px -30px 20px -30px;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+}
+
+.ps-card-image::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, rgba(255,255,255,0) 40%, rgba(255,255,255,1) 95%, #ffffff 100%);
+}
+
+.ps-card-icon.overlay {
+    position: absolute;
+    bottom: -20px;
+    left: 30px;
+    margin: 0;
+    z-index: 2;
+    background-color: #ffffff;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.ps-card.theme-corporate:hover {
+    border-color: #00796B;
+    box-shadow: 0 12px 30px rgba(0, 121, 107, 0.15);
+}
+.ps-card.theme-corporate .ps-card-icon {
+    color: #00796B;
+}
+
+.ps-card.theme-government:hover {
+    border-color: #E65100;
+    box-shadow: 0 12px 30px rgba(230, 81, 0, 0.15);
+}
+.ps-card.theme-government .ps-card-icon {
+    color: #E65100;
+}
+
+.ps-card.theme-products:hover {
+    border-color: #2E7D32;
+    box-shadow: 0 12px 30px rgba(46, 125, 50, 0.15);
+}
+.ps-card.theme-products .ps-card-icon {
+    color: #2E7D32;
+}
+
+/* ==========================================================
+   MOBILE OPTIMIZATION FOR PRODUCTS & SERVICES
+   Scale down card contents to fit more per screen
+   ========================================================== */
+@media (max-width: 768px) {
+    .ps-card {
+        padding: 20px 15px !important;
+    }
+    
+    .ps-card-icon {
+        width: 40px !important;
+        height: 40px !important;
+        margin-bottom: 15px !important;
+    }
+    
+    .ps-card-icon svg {
+        width: 20px !important;
+        height: 20px !important;
+    }
+    
+    .ps-card-title {
+        font-size: 1.1rem !important;
+        margin-bottom: 8px !important;
+    }
+    
+    .ps-card-desc {
+        font-size: 0.85rem !important;
+    }
+    
+    .ps-service-btn {
+        padding: 8px 15px !important;
+        font-size: 0.8rem !important;
+        margin-top: 15px !important;
+    }
+    
+    /* Also scale down Level 4 Details */
+    .ps-details-title {
+        font-size: 1.5rem !important;
+    }
+    
+    .ps-badge {
+        padding: 4px 8px !important;
+        font-size: 0.7rem !important;
+    }
+}

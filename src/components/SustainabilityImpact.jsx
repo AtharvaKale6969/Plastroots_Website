@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import * as SimpleMaps from 'react-simple-maps';
 import { geoCentroid } from 'd3-geo';
 import CountUpLib from 'react-countup';
@@ -26,7 +26,23 @@ const formatStateName = (name) => {
 };
 
 const SustainabilityImpact = () => {
-    const [tooltipContent, setTooltipContent] = useState('');
+    const [tooltipContent, setTooltipContent] = useState("");
+
+    // Click outside listener to dismiss the tooltip
+    useEffect(() => {
+        const handleClickOutside = (e) => {
+            if (!e.target.closest('.si-india-map') && !e.target.closest('.si-nagpur-marker')) {
+                setTooltipContent("");
+            }
+        };
+        document.addEventListener('mousedown', handleClickOutside);
+        document.addEventListener('touchstart', handleClickOutside);
+        
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+            document.removeEventListener('touchstart', handleClickOutside);
+        };
+    }, []);
 
     return (
         <section className="sustainability-impact-section">
@@ -83,26 +99,32 @@ const SustainabilityImpact = () => {
                     {/* Right Column: Interactive Map */}
                     <div className="si-map-container fade-up" style={{ animationDelay: '0.3s', position: 'relative' }}>
                     
-                    {tooltipContent && (
-                        <div className="si-tooltip" style={{
-                            position: 'absolute',
-                            top: '20px',
-                            right: '20px',
-                            background: '#fcf9f2',
-                            border: '1px solid #dcd5c4',
+                    {/* Dedicated Pill Section for the State Name */}
+                    <div className="si-map-tooltip-pill" style={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        marginBottom: '15px',
+                        minHeight: '44px', // reserves space so layout doesn't jump
+                        position: 'relative',
+                        zIndex: 10
+                    }}>
+                        <div style={{
+                            backgroundColor: '#ffffff',
+                            padding: '10px 25px',
+                            borderRadius: '30px',
                             color: '#16261d',
-                            padding: '10px 20px',
-                            borderRadius: '8px',
-                            fontFamily: '"Inter", sans-serif',
-                            fontWeight: '600',
-                            zIndex: 10,
-                            pointerEvents: 'none',
-                            boxShadow: '0 10px 25px rgba(0,0,0,0.3)',
-                            transition: 'all 0.3s ease'
+                            fontWeight: '700',
+                            boxShadow: '0 8px 20px rgba(0,0,0,0.1)',
+                            border: '1px solid rgba(164, 214, 94, 0.4)',
+                            transition: 'all 0.3s ease',
+                            opacity: tooltipContent ? 1 : 0,
+                            transform: tooltipContent ? 'translateY(0)' : 'translateY(10px)',
+                            pointerEvents: 'none'
                         }}>
-                            {tooltipContent}
+                            {tooltipContent || "Select a location"}
                         </div>
-                    )}
+                    </div>
 
                     <ComposableMap
                         projection="geoMercator"
@@ -110,7 +132,8 @@ const SustainabilityImpact = () => {
                         className="si-india-map"
                         width={1000}
                         height={900}
-                        style={{ filter: 'drop-shadow(0px 20px 40px rgba(0, 0, 0, 0.5))', width: '100%', height: 'auto' }}
+                        onClick={() => setTooltipContent("")}
+                        style={{ filter: 'drop-shadow(0px 20px 40px rgba(0, 0, 0, 0.5))', width: '100%', height: 'auto', cursor: 'pointer' }}
                     >
                         <Geographies geography={geoUrl}>
                             {({ geographies }) =>
@@ -129,7 +152,10 @@ const SustainabilityImpact = () => {
                                             <Geography
                                                 geography={geo}
                                                 onMouseEnter={() => setTooltipContent(stateName)}
-                                                onMouseLeave={() => setTooltipContent("")}
+                                                onClick={(e) => {
+                                                    if(e && e.stopPropagation) e.stopPropagation();
+                                                    setTooltipContent(stateName);
+                                                }}
                                                 fill="#fcf9f2"
                                                 stroke="#e5dfce"
                                                 strokeWidth={1}
@@ -175,13 +201,15 @@ const SustainabilityImpact = () => {
                             }
                         </Geographies>
 
-                        {/* Nagpur Headquarters Marker: [79.0882, 21.1458] */}
-                        <Marker coordinates={[79.0882, 21.1458]}>
-                            <g className="si-nagpur-marker" 
-                               onMouseEnter={() => setTooltipContent("Headquarters: Nagpur, Maharashtra")} 
-                               onMouseLeave={() => setTooltipContent("")}
-                               style={{ cursor: 'pointer' }}
-                            >
+                        <Marker 
+                            coordinates={[79.0882, 21.1458]}
+                            onMouseEnter={() => setTooltipContent("Headquarters: Nagpur, Maharashtra")} 
+                            onClick={(e) => {
+                                if(e && e.stopPropagation) e.stopPropagation();
+                                setTooltipContent("Headquarters: Nagpur, Maharashtra");
+                            }}
+                        >
+                            <g className="si-nagpur-marker" style={{ cursor: 'pointer' }}>
                                 <circle cx={0} cy={0} r={4} fill="#a4d65e" />
                                 <circle cx={0} cy={0} r={8} fill="none" stroke="#16261d" strokeWidth={1.5} />
                                 <circle cx={0} cy={0} r={16} fill="none" stroke="#a4d65e" strokeWidth={1.5} className="si-pulse" />

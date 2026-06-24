@@ -131,11 +131,20 @@ const Testimonials = () => {
             </div>
 
             {/* Bottom Split Background Area */}
-            <div className="testimonials-split-wrapper" style={{ padding: '80px 0 100px 0', width: '100%' }}>
-                <div className="testimonials-grid" style={{ width: '100%', maxWidth: '100vw', margin: 0, padding: '0 5%' }}>
+            <div className="testimonials-split-wrapper" style={{ padding: '80px 0 100px 0', width: '100%', margin: 0, boxSizing: 'border-box' }}>
+                <div className="testimonials-flex-container" style={{ display: 'flex', width: '100%', margin: 0, padding: 0, boxSizing: 'border-box' }}>
                     {/* Left Side: Circular Network */}
-                    <div className="network-wrapper fade-up" style={{ animationDelay: '0.2s', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                        <div className="network-container">
+                    <div className="network-wrapper fade-up" style={{ 
+                        animationDelay: '0.2s', 
+                        display: 'flex', 
+                        justifyContent: 'center', 
+                        alignItems: 'center',
+                        width: '50%',
+                        margin: 0,
+                        padding: 0,
+                        boxSizing: 'border-box'
+                    }}>
+                        <div className="network-container" style={{ margin: 0, padding: 0 }}>
                             <div className="network-ring"></div>
                             
                             <div className="network-center-logo">
@@ -155,36 +164,56 @@ const Testimonials = () => {
                         ))}
                         </div>
                     </div>
-
                     {/* Right Side: Testimonial Card */}
-                    <div className="testimonial-card-wrapper fade-up" style={{ animationDelay: '0.4s', padding: '0 20px' }}>
-                        <div className="testimonial-card">
-                            <i className="fas fa-quote-left quote-icon"></i>
-                            
-                            <div className="testimonial-header">
-                                <img src={activeTestimonial.logo} alt={activeTestimonial.entity} className="testimonial-logo" />
-                                <div className="testimonial-entity">
-                                    <h4>{activeTestimonial.entity}</h4>
-                                </div>
+                    <div className="testimonial-content-wrapper fade-up" style={{ 
+                        animationDelay: '0.4s', 
+                        display: 'flex', 
+                        flexDirection: 'column',
+                        justifyContent: 'center', 
+                        alignItems: 'center',
+                        width: '50%',
+                        position: 'relative',
+                        zIndex: 10,
+                        margin: 0,
+                        padding: '2rem 5rem',
+                        boxSizing: 'border-box',
+                        textAlign: 'center'
+                    }}>
+                        <i className="fas fa-quote-left quote-icon" style={{ marginBottom: '15px', color: 'var(--accent-green)', fontSize: '2rem' }}></i>
+                        
+                        <div className="testimonial-header" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginBottom: '20px' }}>
+                            <img src={activeTestimonial.logo} alt={activeTestimonial.entity} className="testimonial-logo" style={{ marginBottom: '10px' }} />
+                            <div className="testimonial-entity">
+                                <h4 style={{ margin: 0, color: 'var(--dark-green)' }}>{activeTestimonial.entity}</h4>
                             </div>
-                            
-                            <div className="testimonial-body">
-                                "{activeTestimonial.text}"
-                            </div>
-                            
-                            <div className="testimonial-author">
-                                <strong>{activeTestimonial.author}</strong>
-                                <span>{activeTestimonial.title}</span>
-                            </div>
+                        </div>
+                        
+                        <div className="testimonial-body" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '20px' }}>
+                            <p style={{ margin: 0, fontStyle: 'italic', fontSize: '1.1rem', color: 'var(--dark-green)' }}>"{activeTestimonial.text}"</p>
+                        </div>
+                        
+                        <div className="testimonial-author" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginBottom: '30px' }}>
+                            <strong style={{ color: 'var(--accent-green)', fontSize: '1.1rem' }}>{activeTestimonial.author}</strong>
+                            <span style={{ fontSize: '0.9rem', color: 'var(--text-muted)' }}>{activeTestimonial.title}</span>
+                        </div>
 
-                            <div className="testimonial-controls">
-                                <button className="t-control-btn prev" onClick={handlePrev}>
-                                    <i className="fas fa-chevron-left"></i>
-                                </button>
-                                <button className="t-control-btn next" onClick={handleNext}>
-                                    <i className="fas fa-chevron-right"></i>
-                                </button>
-                            </div>
+                        <div className="testimonial-controls" style={{ 
+                            position: 'absolute', 
+                            top: '50%', 
+                            left: 0, 
+                            right: 0, 
+                            transform: 'translateY(-50%)', 
+                            display: 'flex', 
+                            justifyContent: 'space-between', 
+                            pointerEvents: 'none',
+                            padding: '0 30px'
+                        }}>
+                            <button className="t-control-btn prev" onClick={handlePrev} style={{ pointerEvents: 'auto' }}>
+                                <i className="fas fa-chevron-left"></i>
+                            </button>
+                            <button className="t-control-btn next" onClick={handleNext} style={{ pointerEvents: 'auto' }}>
+                                <i className="fas fa-chevron-right"></i>
+                            </button>
                         </div>
                     </div>
                 </div>

@@ -13,7 +13,7 @@ const Hero = () => {
                     <button className="hero-btn hero-btn-secondary">Get Involved</button>
                 </div>
             </div>
-            <div className="hero-tree-bg"><i className="fas fa-tree"></i></div>
+
         </section>
     );
 };
