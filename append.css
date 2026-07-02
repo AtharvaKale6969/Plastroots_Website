@@ -1,0 +1,64 @@
+
+/* Bento Grid Layout for Contact Page */
+.contact-bento-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 24px;
+  max-width: 1200px;
+  margin: -60px auto 60px;
+  padding: 0 5vw;
+  position: relative;
+  z-index: 10;
+}
+
+.bento-card {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+  border: 1px solid var(--contact-border);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.bento-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 30px rgba(0,0,0,0.1);
+}
+
+.bento-card-inner {
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.bento-card.dark {
+  background: var(--contact-dark-green);
+  color: white;
+  border: none;
+}
+
+/* Grid Spans */
+.span-4 { grid-column: span 4; }
+.span-5 { grid-column: span 5; }
+.span-6 { grid-column: span 6; }
+.span-7 { grid-column: span 7; }
+.span-8 { grid-column: span 8; }
+.span-12 { grid-column: span 12; }
+
+@media (max-width: 992px) {
+  .span-4, .span-5, .span-6, .span-7, .span-8, .span-12 {
+    grid-column: span 12;
+  }
+}
+
+.bento-map {
+  padding: 0;
+  min-height: 350px;
+}
+
+.contact-card-icon.dark-icon {
+  background: rgba(255,255,255,0.1);
+  color: #fff;
+}

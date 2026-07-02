@@ -1,14 +1,44 @@
-import React from 'react';
+import React, { useEffect, useState, useRef } from 'react';
+
+const useIntersectionObserver = (options) => {
+  const [isIntersecting, setIsIntersecting] = useState(false);
+  const ref = useRef(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) {
+        setIsIntersecting(true);
+        if (ref.current) observer.unobserve(ref.current);
+      }
+    }, options);
+
+    if (ref.current) {
+      observer.observe(ref.current);
+    }
+
+    return () => {
+      if (ref.current) {
+        observer.unobserve(ref.current);
+      }
+    };
+  }, []); // Empty array to avoid recreating observer unless unmounted
+
+  return [ref, isIntersecting];
+};
 
 const About = () => {
+    const [aboutRef, isAboutVisible] = useIntersectionObserver({ threshold: 0.1 });
+    const [vmvRef, isVmvVisible] = useIntersectionObserver({ threshold: 0.1 });
+    const [featuresRef, isFeaturesVisible] = useIntersectionObserver({ threshold: 0.1 });
+
     return (
         <section className="about-section" id="about">
             <img src="/Images/PWMSPL_LOGO-removebg-preview.png" alt="" className="watermark-tree-about" />
             <div className="decor decor-left"></div>
             <div className="decor decor-right"></div>
             
-            <div className="container about-grid">
-                <div className="about-visual fade-in visible">
+            <div className="container about-grid" ref={aboutRef}>
+                <div className={`about-visual fade-in ${isAboutVisible ? 'visible' : ''}`}>
                     <div className="circle-infographic">
                         <div className="center-logo">
                             <img src="/Images/PWMSPL_LOGO-removebg-preview.png" alt="Plastroots Center Logo" className="center-logo-img" />
@@ -51,31 +81,31 @@ const About = () => {
                     </div>
                 </div>
 
-                <div className="about-content slide-in-right visible">
+                <div className={`about-content slide-in-right ${isAboutVisible ? 'visible' : ''}`}>
                     <h2 className="section-heading">ABOUT <span style={{ color: 'var(--primary-green)' }}>PLASTROOTS</span></h2>
                     
-                    <p className="fade-up visible" style={{ animationDelay: '0.1s' }}>Plastroots is a social enterprise dedicated to transforming waste management in India by shifting from a linear to a circular model. Founded in 2019 by social entrepreneur Mr. Kapil Jangale, Plastroots Waste Management & Solutions Private Limited works to reduce carbon footprints and minimize landfill usage.</p>
-                    <p className="fade-up visible" style={{ animationDelay: '0.2s' }}>We are committed to implementing effective waste management systems in remote areas to promote a circular economy. Our initiatives include awareness campaigns, training programs, and workshops designed to educate communities on sustainable practices.</p>
-                    <p className="fade-up visible" style={{ animationDelay: '0.3s' }}>Plastroots focuses on professional waste aggregation and segregation, guided by the principles of Reduce, Reuse, and Recycle. Our primary objective is to address the lack of structured waste management in rural regions outside major cities, where nearly 75% of waste remains unsorted and contributes to environmental pollution. By introducing systematic solutions, we strive to build cleaner, healthier, and more sustainable communities.</p>
+                    <p className={`fade-up ${isAboutVisible ? 'visible' : ''}`} style={{ animationDelay: '0.1s' }}>Plastroots is a social enterprise dedicated to transforming waste management in India by shifting from a linear to a circular model. Founded in 2019 by social entrepreneur Mr. Kapil Jangale, Plastroots Waste Management & Solutions Private Limited works to reduce carbon footprints and minimize landfill usage.</p>
+                    <p className={`fade-up ${isAboutVisible ? 'visible' : ''}`} style={{ animationDelay: '0.2s' }}>We are committed to implementing effective waste management systems in remote areas to promote a circular economy. Our initiatives include awareness campaigns, training programs, and workshops designed to educate communities on sustainable practices.</p>
+                    <p className={`fade-up ${isAboutVisible ? 'visible' : ''}`} style={{ animationDelay: '0.3s' }}>Plastroots focuses on professional waste aggregation and segregation, guided by the principles of Reduce, Reuse, and Recycle. Our primary objective is to address the lack of structured waste management in rural regions outside major cities, where nearly 75% of waste remains unsorted and contributes to environmental pollution. By introducing systematic solutions, we strive to build cleaner, healthier, and more sustainable communities.</p>
                 </div>
             </div>
 
-            <section className="vmv-section">
+            <section className="vmv-section" ref={vmvRef}>
                 <div className="container">
                     <div className="vmv-grid">
-                        <div className="vmv-card vision-card fade-up visible" style={{ animationDelay: '0.1s' }}>
+                        <div className={`vmv-card vision-card slide-in-left ${isVmvVisible ? 'visible' : ''}`} style={{ animationDelay: '0.1s' }}>
                             <div className="vmv-icon"><i className="fas fa-eye"></i></div>
                             <h3>Our Vision</h3>
                             <p>To become a leading management & resource recovery company, enabling a cleaner, circular & landfill-free future for India.</p>
                         </div>
 
-                        <div className="vmv-card mission-card fade-up visible" style={{ animationDelay: '0.2s' }}>
+                        <div className={`vmv-card mission-card fade-up ${isVmvVisible ? 'visible' : ''}`} style={{ animationDelay: '0.2s' }}>
                             <div className="vmv-icon"><i className="fas fa-bullseye"></i></div>
                             <h3>Our Mission</h3>
                             <p>To provide innovative & sustainable waste management solutions through collection, segregation, resource recovery, helping communities & organizations reduce environmental impact while creating value from waste.</p>
                         </div>
 
-                        <div className="vmv-card values-card fade-up visible" style={{ animationDelay: '0.3s' }}>
+                        <div className={`vmv-card values-card slide-in-right ${isVmvVisible ? 'visible' : ''}`} style={{ animationDelay: '0.3s' }}>
                             <div className="vmv-icon"><i className="fas fa-heart"></i></div>
                             <h3>Our Values</h3>
                             <ul className="values-list">
@@ -92,11 +122,15 @@ const About = () => {
                 </div>
             </section>
 
-            <section className="editorial-features-section">
+            <section className="editorial-features-section" ref={featuresRef}>
                 <img src="/Images/PWMSPL_LOGO-removebg-preview.png" alt="" className="ed-bg-watermark" />
                 <div className="container" style={{ padding: '80px 0', position: 'relative', zIndex: 2 }}>
+                    <div style={{ textAlign: 'center', marginBottom: '60px', background: 'rgba(255, 255, 255, 0.03)', backdropFilter: 'blur(12px)', WebkitBackdropFilter: 'blur(12px)', padding: '50px 20px', borderRadius: '24px', border: '1px solid rgba(255, 255, 255, 0.08)', maxWidth: '800px', margin: '0 auto 60px auto', boxShadow: '0 20px 40px rgba(0,0,0,0.1)' }} className={`fade-up ${isFeaturesVisible ? 'visible' : ''}`}>
+                        <span style={{ background: 'rgba(52, 211, 153, 0.15)', color: '#34d399', display: 'inline-block', padding: '8px 20px', borderRadius: '30px', fontSize: '0.85rem', fontWeight: '600', letterSpacing: '1.5px', textTransform: 'uppercase', marginBottom: '20px' }}>Our Journey & Impact</span>
+                        <h2 style={{ fontSize: '3rem', color: '#ffffff', fontWeight: '700', margin: '0', letterSpacing: '-0.5px' }}>Pioneering a Circular Future</h2>
+                    </div>
                     <div className="editorial-feature-grid">
-                        <div className="ed-feature-card fade-up visible" style={{ animationDelay: '0.1s' }}>
+                        <div className={`ed-feature-card fade-up ${isFeaturesVisible ? 'visible' : ''}`} style={{ animationDelay: '0.1s' }}>
                             <div className="ed-card-header">
                                 <span className="ed-index-mark">01 &mdash; FOOTPRINT</span>
                                 <div className="ed-seal-container">
@@ -114,7 +148,7 @@ const About = () => {
                             </div>
                         </div>
 
-                        <div className="ed-feature-card fade-up visible" style={{ animationDelay: '0.2s' }}>
+                        <div className={`ed-feature-card fade-up ${isFeaturesVisible ? 'visible' : ''}`} style={{ animationDelay: '0.2s' }}>
                             <div className="ed-card-header">
                                 <span className="ed-index-mark">02 &mdash; ROOTS</span>
                                 <div className="ed-seal-container">
@@ -132,7 +166,7 @@ const About = () => {
                             </div>
                         </div>
 
-                        <div className="ed-feature-card fade-up visible" style={{ animationDelay: '0.3s' }}>
+                        <div className={`ed-feature-card fade-up ${isFeaturesVisible ? 'visible' : ''}`} style={{ animationDelay: '0.3s' }}>
                             <div className="ed-card-header">
                                 <span className="ed-index-mark">03 &mdash; IMPACT</span>
                                 <div className="ed-seal-container">
@@ -150,7 +184,7 @@ const About = () => {
                             </div>
                         </div>
 
-                        <div className="ed-feature-card fade-up visible" style={{ animationDelay: '0.4s' }}>
+                        <div className={`ed-feature-card fade-up ${isFeaturesVisible ? 'visible' : ''}`} style={{ animationDelay: '0.4s' }}>
                             <div className="ed-card-header">
                                 <span className="ed-index-mark">04 &mdash; SOLUTIONS</span>
                                 <div className="ed-seal-container">

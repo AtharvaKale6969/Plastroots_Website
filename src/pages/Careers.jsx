@@ -2,9 +2,41 @@ import React, { useState } from 'react';
 
 const Careers = () => {
     const [openFaq, setOpenFaq] = useState(0);
+    const [currentImageIndex, setCurrentImageIndex] = useState(0);
+    const [openRoleIndex, setOpenRoleIndex] = useState(null);
 
     const toggleFaq = (index) => {
         setOpenFaq(openFaq === index ? -1 : index);
+    };
+
+    const toggleRole = (index) => {
+        setOpenRoleIndex(openRoleIndex === index ? null : index);
+    };
+
+    const rolesLookedFor = [
+        { title: "Problem solvers", description: "We seek individuals who can tackle complex waste management challenges with practical and scalable solutions." },
+        { title: "Sustainability enthusiasts", description: "Passion for the environment is at our core. We want people who are genuinely driven to make a positive ecological impact." },
+        { title: "Community-driven individuals", description: "Building relationships with local communities and municipalities is key to driving grassroots change in circularity." },
+        { title: "Operations and field professionals", description: "We rely on hands-on experts who can manage on-ground logistics, collection drives, and facility operations efficiently." },
+        { title: "Innovative thinkers", description: "The waste sector needs fresh ideas. We look for creative minds who can optimize processes and find new value in resources." },
+        { title: "Team players", description: "Collaboration across departments and with external stakeholders is essential to achieving our vision of a zero-waste future." }
+    ];
+
+    const lifeImages = [
+        { src: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80", alt: "Team Collaboration" },
+        { src: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80", alt: "Field Visits" },
+        { src: "https://images.unsplash.com/photo-1531206715517-5c0ba140b2b8?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80", alt: "Community Engagement" },
+        { src: "https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80", alt: "Awareness Programs" },
+        { src: "https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80", alt: "Facility Operations" },
+        { src: "https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80", alt: "Training & Workshops" }
+    ];
+
+    const nextImage = () => {
+        setCurrentImageIndex((prev) => (prev + 1) % lifeImages.length);
+    };
+
+    const prevImage = () => {
+        setCurrentImageIndex((prev) => (prev - 1 + lifeImages.length) % lifeImages.length);
     };
 
     const faqs = [
@@ -21,12 +53,12 @@ const Careers = () => {
             <section className="careers-hero">
                 <div className="careers-hero-overlay"></div>
                 <div className="container">
-                    <div className="careers-hero-content fade-up visible">
-                        <h1>Build a Career<br/><span>That Creates Impact</span></h1>
-                        <div className="careers-hero-divider">
+                    <div className="careers-hero-content fade-up visible" style={{ textAlign: 'center', margin: '0 auto', display: 'flex', flexDirection: 'column', alignItems: 'center', maxWidth: '800px' }}>
+                        <h1 style={{ textAlign: 'center' }}>Build a Career<br/><span>That Creates Impact</span></h1>
+                        <div className="careers-hero-divider" style={{ margin: '15px auto' }}>
                             <i className="fas fa-leaf"></i>
                         </div>
-                        <p>Join Plastroots and be part of a mission that is re-rooting waste from linear to circular for a cleaner, greener tomorrow.</p>
+                        <p style={{ textAlign: 'center' }}>Join Plastroots and be part of a mission that is re-rooting waste from linear to circular for a cleaner, greener tomorrow.</p>
                     </div>
                 </div>
             </section>
@@ -72,42 +104,51 @@ const Careers = () => {
                     <div className="c-grid-2">
                         <div className="c-who-look">
                             <h2>Who We Look For</h2>
-                            <ul className="c-look-list">
-                                <li><i className="far fa-check-circle"></i> Problem solvers</li>
-                                <li><i className="far fa-check-circle"></i> Sustainability enthusiasts</li>
-                                <li><i className="far fa-check-circle"></i> Community-driven individuals</li>
-                                <li><i className="far fa-check-circle"></i> Operations and field professionals</li>
-                                <li><i className="far fa-check-circle"></i> Innovative thinkers</li>
-                                <li><i className="far fa-check-circle"></i> Team players</li>
-                            </ul>
+                            <div className="c-accordion" style={{ marginTop: '20px' }}>
+                                {rolesLookedFor.map((role, idx) => (
+                                    <div className={`c-accordion-item ${openRoleIndex === idx ? 'active' : ''}`} key={idx} style={{ marginBottom: '10px', background: '#fff', borderRadius: '8px', overflow: 'hidden', boxShadow: '0 2px 10px rgba(0,0,0,0.05)', border: '1px solid #eee' }}>
+                                        <button 
+                                            className="c-accordion-header" 
+                                            onClick={() => toggleRole(idx)}
+                                            style={{ width: '100%', padding: '15px 20px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: 'transparent', border: 'none', cursor: 'pointer', fontWeight: 'bold', fontSize: '1rem', color: '#333' }}
+                                        >
+                                            <span style={{ display: 'flex', alignItems: 'center', gap: '10px' }}><i className="far fa-check-circle" style={{ color: '#4caf50' }}></i> {role.title}</span>
+                                            <i className={`fas fa-chevron-${openRoleIndex === idx ? 'up' : 'down'}`} style={{ color: '#666', transition: 'transform 0.3s' }}></i>
+                                        </button>
+                                        <div className="c-accordion-body" style={{ maxHeight: openRoleIndex === idx ? '150px' : '0', overflow: 'hidden', transition: 'max-height 0.3s ease-in-out', padding: openRoleIndex === idx ? '0 20px 15px 44px' : '0 20px 0 44px', color: '#555', fontSize: '0.9rem', lineHeight: '1.5', textAlign: 'left' }}>
+                                            {role.description}
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
                         </div>
                         <div className="c-life">
                             <h2>Life at Plastroots</h2>
-                            <div className="c-photo-grid">
-                                <div className="c-photo-item">
-                                    <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Team Collaboration" />
-                                    <span>Team Collaboration</span>
+                            <div className="c-photo-carousel" style={{ position: 'relative', width: '100%', height: '400px', overflow: 'hidden', borderRadius: '15px' }}>
+                                <img 
+                                    src={lifeImages[currentImageIndex].src} 
+                                    alt={lifeImages[currentImageIndex].alt} 
+                                    style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'opacity 0.3s ease-in-out' }} 
+                                />
+                                <div style={{ position: 'absolute', bottom: '0', left: '0', right: '0', padding: '15px', background: 'rgba(0,0,0,0.6)', color: 'white', textAlign: 'center', fontWeight: 'bold' }}>
+                                    {lifeImages[currentImageIndex].alt}
                                 </div>
-                                <div className="c-photo-item">
-                                    <img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Field Visits" />
-                                    <span>Field Visits</span>
-                                </div>
-                                <div className="c-photo-item">
-                                    <img src="https://images.unsplash.com/photo-1531206715517-5c0ba140b2b8?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Community Engagement" />
-                                    <span>Community Engagement</span>
-                                </div>
-                                <div className="c-photo-item">
-                                    <img src="https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Awareness Programs" />
-                                    <span>Awareness Programs</span>
-                                </div>
-                                <div className="c-photo-item">
-                                    <img src="https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Facility Operations" />
-                                    <span>Facility Operations</span>
-                                </div>
-                                <div className="c-photo-item">
-                                    <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Training & Workshops" />
-                                    <span>Training & Workshops</span>
-                                </div>
+                                <button onClick={prevImage} style={{ position: 'absolute', top: '50%', left: '10px', transform: 'translateY(-50%)', background: 'rgba(255,255,255,0.7)', border: 'none', borderRadius: '50%', width: '40px', height: '40px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '18px', color: '#333' }}>
+                                    <i className="fas fa-chevron-left"></i>
+                                </button>
+                                <button onClick={nextImage} style={{ position: 'absolute', top: '50%', right: '10px', transform: 'translateY(-50%)', background: 'rgba(255,255,255,0.7)', border: 'none', borderRadius: '50%', width: '40px', height: '40px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '18px', color: '#333' }}>
+                                    <i className="fas fa-chevron-right"></i>
+                                </button>
+                            </div>
+                            <div style={{ display: 'flex', justifyContent: 'center', marginTop: '15px', gap: '8px' }}>
+                                {lifeImages.map((_, idx) => (
+                                    <button 
+                                        key={idx} 
+                                        onClick={() => setCurrentImageIndex(idx)}
+                                        style={{ width: '10px', height: '10px', borderRadius: '50%', border: 'none', background: currentImageIndex === idx ? '#4caf50' : '#ccc', cursor: 'pointer' }}
+                                        aria-label={`Go to slide ${idx + 1}`}
+                                    />
+                                ))}
                             </div>
                         </div>
                     </div>

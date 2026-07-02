@@ -8,6 +8,7 @@ const ProductsServices = () => {
     const [activeCategory, setActiveCategory] = useState(null);
     const [activeService, setActiveService] = useState(null);
     const [activeTab, setActiveTab] = useState(0);
+    const [activeFaq, setActiveFaq] = useState(null);
 
     const location = useLocation();
     const navigate = useNavigate();
@@ -42,6 +43,7 @@ const ProductsServices = () => {
 
     const handleServiceClick = (serviceId) => {
         setActiveService(serviceId);
+        setActiveFaq(null);
         setCurrentLevel(4);
     };
 
@@ -103,7 +105,7 @@ const ProductsServices = () => {
     // ----------------------------------------------------
     const renderLevel1 = () => (
         <div className="ps-view-container" key="level1">
-            <div className="ps-hero-section ps-hub-hero" style={{ backgroundImage: 'url(/Images/ps_hub_hero.png)' }}>
+            <div className="ps-hero-section ps-hub-hero" style={{ backgroundImage: 'url(/Images/Product&Services_hero.png)' }}>
                 <div className="ps-hero-overlay"></div>
                 <div className="ps-hero-content">
                     <h1>Products & Services</h1>
@@ -312,53 +314,184 @@ const ProductsServices = () => {
                     <h2>{serviceData.detailTagline}</h2>
                 </div>
 
-                <div className="ps-grid-2" style={{ gridTemplateColumns: '2fr 1fr' }}>
-                    <div className="ps-detail-content" style={{ margin: 0 }}>
-                        <h3>Overview</h3>
-                        <p>{serviceData.about}</p>
-                        
-                        {serviceData.executionNote && (
-                            <div className={`ps-execution-note ${serviceData.badgeType || 'green'}`}>
-                                {serviceData.badgeType === 'green' ? <Icons.CheckCircle size={20} /> : <Icons.RefreshCw size={20} />}
-                                {serviceData.executionNote}
+                <div className="ps-overview-section">
+                    {/* 1. Top Section */}
+                    {serviceData.overviewDetails && (
+                        <div className="ps-overview-top">
+                            <div className="ps-overview-image">
+                                <img src={serviceData.overviewDetails.imagePath} alt={serviceData.overviewDetails.title} />
                             </div>
-                        )}
-                    </div>
-
-                    <div className="ps-detail-content" style={{ margin: 0 }}>
-                        <h3>{serviceData.includedTitle || serviceData.includedListTitle || "Services Included"}</h3>
-                        
-                        {serviceData.included && (
-                            <ul className="ps-detail-list">
-                                {serviceData.included.map((item, idx) => (
-                                    <li key={idx}>
-                                        <strong>{item.title}</strong>
-                                        {item.desc}
-                                    </li>
+                            <div className="ps-overview-text">
+                                <h3>{serviceData.overviewDetails.title}</h3>
+                                {serviceData.overviewDetails.paragraphs.map((p, idx) => (
+                                    <p key={idx}>{p}</p>
                                 ))}
-                            </ul>
-                        )}
+                            </div>
+                        </div>
+                    )}
 
-                        {serviceData.includedList && (
-                            <ul className="ps-detail-list">
-                                {serviceData.includedList.map((item, idx) => (
-                                    <li key={idx}>{item}</li>
-                                ))}
-                            </ul>
-                        )}
+                    {/* Execution Note if present */}
+                    {serviceData.executionNote && (
+                        <div className={`ps-execution-note ${serviceData.badgeType || 'green'}`}>
+                            {serviceData.badgeType === 'green' ? <Icons.CheckCircle size={20} /> : <Icons.RefreshCw size={20} />}
+                            {serviceData.executionNote}
+                        </div>
+                    )}
 
-                        {serviceData.includedListTitle2 && (
-                            <>
-                                <h3>{serviceData.includedListTitle2}</h3>
-                                <ul className="ps-detail-list">
-                                    {serviceData.includedList2.map((item, idx) => (
-                                        <li key={idx}>{item}</li>
+                    {/* 2. Gallery Section */}
+                    {serviceData.gallery && serviceData.gallery.length > 0 && (
+                        <div className="ps-gallery">
+                            {serviceData.gallery.map((item, idx) => (
+                                <div key={idx} className="ps-gallery-item">
+                                    <img src={item.img} alt={item.name} />
+                                    <span>{item.name}</span>
+                                </div>
+                            ))}
+                        </div>
+                    )}
+
+                    {/* 3. Advanced Dashboard Section */}
+                    {serviceData.statsSection && (
+                        <div className="ps-dashboard-section">
+                            <div className="ps-dashboard-left">
+                                <div className="ps-dashboard-eyebrow">
+                                    <Icons.Leaf size={16} />
+                                    <span>{serviceData.statsSection.eyebrow}</span>
+                                </div>
+                                <h2>{serviceData.statsSection.title}</h2>
+                                <p>{serviceData.statsSection.description}</p>
+                                
+                                <div className="ps-dashboard-ministats">
+                                    {serviceData.statsSection.miniStats.map((stat, idx) => (
+                                        <div key={idx} className="ps-ministat-card">
+                                            <span className="ps-ministat-label">{stat.label}</span>
+                                            <div className="ps-ministat-value-wrapper">
+                                                <span className="ps-ministat-value" style={{ color: stat.color || '#1a4a6e' }}>
+                                                    {stat.value}
+                                                </span>
+                                                {stat.suffix && <span className="ps-ministat-suffix">{stat.suffix}</span>}
+                                            </div>
+                                        </div>
                                     ))}
-                                </ul>
-                            </>
-                        )}
-                    </div>
+                                </div>
+                            </div>
+                            
+                            <div className="ps-dashboard-right">
+                                <div className="ps-dashboard-circular-card">
+                                    <div className="ps-circular-progress">
+                                        <svg viewBox="0 0 100 100">
+                                            <circle cx="50" cy="50" r="40" className="ps-circle-bg" />
+                                            <circle 
+                                                cx="50" 
+                                                cy="50" 
+                                                r="40" 
+                                                className="ps-circle-fill" 
+                                                style={{ strokeDashoffset: `calc(251.2 - (251.2 * ${serviceData.statsSection.circularProgress.value}) / 100)` }}
+                                            />
+                                        </svg>
+                                        <div className="ps-circular-content">
+                                            <span className="ps-circular-value">{serviceData.statsSection.circularProgress.value}%</span>
+                                            <span className="ps-circular-label">{serviceData.statsSection.circularProgress.label}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div className="ps-dashboard-barchart-card">
+                                    <span className="ps-barchart-title">{serviceData.statsSection.barChart.title}</span>
+                                    <div className="ps-barchart-container">
+                                        {serviceData.statsSection.barChart.bars.map((bar, idx) => (
+                                            <div key={idx} className="ps-barchart-column">
+                                                <div className="ps-barchart-bar-wrapper">
+                                                    <span className="ps-barchart-tooltip">{bar.height}</span>
+                                                    <div className="ps-barchart-bar" style={{ '--target-height': bar.height, backgroundColor: bar.color }}></div>
+                                                </div>
+                                                <span className="ps-barchart-label">{bar.label}</span>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
+                    {/* 4. Features Grid */}
+                    {serviceData.features && serviceData.features.length > 0 && (
+                        <div className="ps-features-grid">
+                            {serviceData.features.map((feature, idx) => {
+                                const FeatureIcon = Icons[feature.icon] || Icons.CheckCircle;
+                                return (
+                                    <div key={idx} className="ps-feature-item">
+                                        <div className="ps-feature-icon">
+                                            <FeatureIcon size={32} />
+                                        </div>
+                                        <div className="ps-feature-text">
+                                            <h4>{feature.title}</h4>
+                                            <p>{feature.desc}</p>
+                                        </div>
+                                    </div>
+                                );
+                            })}
+                        </div>
+                    )}
                 </div>
+
+                {/* Why Choose Us Section */}
+                {serviceData.whyChooseUs && (
+                    <div className="ps-why-choose-us">
+                        <div className="ps-why-header">
+                            <span className="ps-why-eyebrow">Why Us</span>
+                            <h3>{serviceData.whyChooseUs.title}</h3>
+                            <p>{serviceData.whyChooseUs.subtitle}</p>
+                        </div>
+                        <div className="ps-why-content-wrapper">
+                            <div className="ps-why-grid-column">
+                                {serviceData.whyChooseUs.points.map((point, idx) => {
+                                    const PointIcon = Icons[point.icon] || Icons.CheckCircle;
+                                    return (
+                                        <div key={idx} className="ps-why-card fade-up" style={{ animationDelay: `${idx * 0.1}s` }}>
+                                            <div className="ps-why-card-icon">
+                                                <PointIcon size={32} />
+                                            </div>
+                                            <div className="ps-why-card-text">
+                                                <h4>{point.title}</h4>
+                                                <p>{point.desc}</p>
+                                            </div>
+                                        </div>
+                                    );
+                                })}
+                            </div>
+                            <div className="ps-why-image-side fade-up" style={{ animationDelay: '0.4s' }}>
+                                <img src="/Images/Why_Choose_us.png" alt="Why Choose Us" />
+                            </div>
+                        </div>
+                    </div>
+                )}
+
+                {/* FAQ Section */}
+                {serviceData.faqs && (
+                    <div className="ps-faq-section">
+                        <h3>Frequently Asked Questions</h3>
+                        <div className="ps-faq-list">
+                            {serviceData.faqs.map((faq, idx) => (
+                                <div 
+                                    key={idx} 
+                                    className={`ps-faq-item ${activeFaq === idx ? 'active' : ''}`}
+                                    onClick={() => setActiveFaq(activeFaq === idx ? null : idx)}
+                                >
+                                    <div className="ps-faq-question">
+                                        <h4>{faq.question}</h4>
+                                        <div className="ps-faq-icon">
+                                            {activeFaq === idx ? <Icons.Minus size={18} /> : <Icons.Plus size={18} />}
+                                        </div>
+                                    </div>
+                                    <div className="ps-faq-answer">
+                                        <p>{faq.answer}</p>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                )}
 
                 {serviceData.closing && (
                     <div className="ps-closing-text">{serviceData.closing}</div>

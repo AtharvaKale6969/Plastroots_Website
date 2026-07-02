@@ -3,7 +3,6 @@ import React from 'react';
 const Hero = () => {
     return (
         <section className="hero">
-            <img src="/Images/leaf_watermark.png" alt="" className="watermark-leaf-hero" />
             <div className="hero-overlay"></div>
             <div className="container hero-content fade-up visible" style={{ textAlign: 'center', margin: '0 auto', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                 <h1 className="hero-title" style={{ fontSize: '2.5rem', lineHeight: '1.2' }}>Transforming Waste.<br/>Empowering Communities.</h1>
