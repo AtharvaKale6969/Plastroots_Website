@@ -384,7 +384,7 @@ export const psData = {
                         about: "Plastroots provides consultancy, survey, and IT support services to government bodies undertaking infrastructure and environmental projects. From initial project planning and DPR preparation through to implementation support and application management, our team brings technical depth and regulatory understanding to help government departments execute projects effectively.",
                 "overviewDetails": {
                     "title": "Survey, IT & Consultancy Services",
-                    "imagePath": "https://loremflickr.com/800/600/survey,drone?lock=160",
+                    "imagePath": "/Images/survey_1.png",
                     "paragraphs": [
                         "The successful implementation of large-scale urban and environmental projects requires meticulous planning, precise technical documentation, and modern digital oversight. Navigating the complex landscape of government approvals, budget allocations, and long-term project viability demands specialized consultancy and robust IT support frameworks.",
                         "We bridge the gap between technical planning and execution by offering expert consultancy and IT services to government departments. Our team prepares highly detailed, technically sound Detailed Project Reports (DPRs) that accelerate funding approvals. Furthermore, we provide dedicated application support and digital monitoring solutions, bringing transparency and data-driven decision-making to municipal operations."
@@ -393,23 +393,23 @@ export const psData = {
                 "gallery": [
                     {
                         "name": "Project Consultancy",
-                        "img": "https://loremflickr.com/800/600/consultants,meeting?lock=161"
+                        "img": "/Images/Products/Project Cinsultancy.jpg"
                     },
                     {
                         "name": "Application Support",
-                        "img": "https://loremflickr.com/800/600/software,support?lock=162"
+                        "img": "/Images/Government Services/Survey, IT & Consultancy Services/Application Support.png"
                     },
                     {
                         "name": "DPR Preparation",
-                        "img": "https://loremflickr.com/800/600/infrastructure,planning?lock=163"
+                        "img": "/Images/Government Services/Solid Waste Management/DPR.png"
                     },
                     {
                         "name": "Technical Consulting",
-                        "img": "https://loremflickr.com/800/600/technical,expert?lock=164"
+                        "img": "/Images/Government Services/Survey, IT & Consultancy Services/Technical Consulting.png"
                     },
                     {
                         "name": "Regulatory Consulting",
-                        "img": "https://loremflickr.com/800/600/lawyer,regulatory?lock=165"
+                        "img": "/Images/Government Services/Survey, IT & Consultancy Services/Regulatory Consulting.png"
                     }
                 ],
                         "features": [
